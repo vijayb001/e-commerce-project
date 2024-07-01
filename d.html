@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+   
+
+    <title>Account Login</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#1">Products</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Account</a></li>
+                    </ul>
+                </nav>
+               
+            </div>
+
+            <div class="account-page">
+                <div class="container">
+                    <div class="row">
+                        
+                        <div class="col-2">
+                            <div class="form-container">
+                                <div class="form-btn">
+                                    <span onclick="login()">Login</span>
+                                    <span onclick="register()">Register</span>
+                                    <hr id="Indicator">
+                                </div>
+                                <form action="demo1.html" id="LoginForm" class="form">
+                                    <div class="form-control">
+                                        <input type="text" placeholder="username" id="username" />
+                                        <small>Error message</small>
+                                    </div>
+                                    <div class="form-control">
+                                        <input type="password" placeholder="Password" id="password" />
+                                      
+                                        <small>Error message</small>
+                                    </div>
+                                    <button type="submit" class="btn">Login</button>
+                                    <a href="#">Forgot Password</a>
+                                </form>
+                                <form action="demo1.html" id="RegForm" class="form">
+                                    <div class="form-control">
+                                        <input type="text" placeholder="username" id="username" />
+                                       
+                                        <small>Error message</small>
+                                    </div>
+                                    <div class="form-control">
+                                        <input type="number" placeholder="Mobile Number" id="number" />
+                                    
+                                        <small>Error message</small>
+                                    </div>
+                                    <div class="form-control">
+                                        <input type="email" placeholder="vijay@123gamil.com" id="email" />
+                                      
+                                        <small>Error message</small>
+                                    </div>
+                                    <div class="form-control">
+                                        <input type="password" placeholder="Password" id="password" />
+                                        <i class="fas fa-check-circle"></i>
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <small>Error message</small>
+                                    </div>
+                                    <div class="form-control">
+                                        <input type="password" placeholder="Retype-Password" id="password2" />
+                                      
+                                        <small>Error message</small>
+                                    </div>
+                                    <button type="submit" class="btn">Login</button>
+                                    <a href="#">Forgot Password</a>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+       
+     
+       
+
+        <script>
+            let LoginForm = document.getElementById("LoginForm");
+            let RegForm = document.getElementById("RegForm");
+            let Indicator = document.getElementById("Indicator");
+
+            function register() {
+                RegForm.style.transform = "translateX(0px)";
+                LoginForm.style.transform = "translateX(0px)";
+                Indicator.style.transform = "translateX(100px)";
+            }
+
+            function login() {
+                RegForm.style.transform = "translateX(300px)";
+                LoginForm.style.transform = "translateX(300px)";
+                Indicator.style.transform = "translateX(0px)";
+            }
+        </script>
+       
+
+        <script>
+            const form = document.getElementsByClassName('form');
+            const username = document.getElementById('username');
+            const email = document.getElementById('email');
+            const mobile = document.getElementById('number');
+            const password = document.getElementById('password');
+            const password2 = document.getElementById('password2');
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                checkInputs();
+            });
+
+            function checkInputs() {
+                
+                const usernameValue = username.value.trim();
+                const emailValue = email.value.trim();
+                const phoneValue = mobile.value.trim();
+                const passwordValue = password.value.trim();
+                const password2Value = password2.value.trim();
+
+                if (usernameValue === '') {
+                    setErrorFor(username, 'Username cannot be empty');
+                } else {
+                    setSuccessFor(username);
+                }
+
+                if (emailValue === '') {
+                    setErrorFor(email, 'Email cannot be empty');
+                } else if (!isEmail(emailValue)) {
+                    setErrorFor(email, 'Not a valid email');
+                } else {
+                    setSuccessFor(email);
+                }
+
+                if (phoneValue === '') {
+                    setErrorFor(mobile, 'Mobile cannot be empty');
+                } else if (!isPhone(phoneValue)) {
+                    setErrorFor(mobile, 'Length should be 10 &  start from the number 6/7/8/9');
+                } else {
+                    setSuccessFor(mobile);
+                }
+
+                if (passwordValue === '') {
+                    setErrorFor(password, 'Password cannot be empty');
+                } else if (!isPassword(passwordValue)) {
+                    setErrorFor(password, 'length should be 6 to 20 which contain at least one numeric digit, one uppercase and one lowercase letter');
+                } else {
+                    setSuccessFor(password);
+                }
+
+                if (password2Value === '') {
+                    setErrorFor(password2, 'Password2 cannot be empty');
+                } else if (passwordValue !== password2Value) {
+                    setErrorFor(password2, 'Password does not match');
+                } else {
+                    setSuccessFor(password2);
+                }
+            }
+
+            function setErrorFor(input, message) {
+                const formControl = input.parentElement;
+                const small = formControl.querySelector('small');
+                formControl.className = 'form-control error';
+                small.innerText = message;
+            }
+
+            function setSuccessFor(input) {
+                const formControl = input.parentElement;
+                formControl.className = 'form-control success';
+            }
+
+            function isEmail(emailValue) {
+                return /^[a-zA-Z0-9]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(emailValue);
+            }
+
+            function isPhone(phoneValue) {
+                return /^[6789]\d{9}$/.test(phoneValue);
+            }
+
+            function isPassword(passwordValue) {
+                return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(passwordValue);
+            }
+        </script>
+
+
+
+</body>
+
+</html>
